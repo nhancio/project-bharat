@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Menu, X } from 'lucide-react';
+import { trackCTAClick, trackFranchiseInterest } from '../utils/analytics';
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
@@ -18,9 +19,10 @@ export default function Navigation() {
         <div className="flex justify-between items-center h-20">
           <div className="flex items-center gap-3">
             <img src="/heas-logo.jpeg" alt="HESA Logo" className="h-12 w-12 object-contain rounded-lg" />
-            <div>
-              <span className="text-2xl font-bold text-hesa-green">HESA</span>
-              <span className="ml-2 text-sm text-hesa-earth">Project Bharath</span>
+            <div className="flex flex-col items-center">
+              <button className="bg-gradient-to-r from-hesa-green to-hesa-lightGreen text-white px-4 py-2 rounded-lg font-bold text-sm hover:shadow-lg transition-all duration-300 hover:scale-105 btn-3d">
+                Project Bharat
+              </button>
             </div>
           </div>
 
@@ -50,7 +52,11 @@ export default function Navigation() {
               Contact
             </button>
             <button
-              onClick={() => scrollToSection('franchise')}
+              onClick={() => {
+                trackCTAClick('Join Us', 'Navigation');
+                trackFranchiseInterest('Navigation CTA');
+                scrollToSection('contact');
+              }}
               className="bg-gradient-to-r from-hesa-green to-hesa-lightGreen text-white px-6 py-2 rounded-md hover:shadow-lg transition-all"
             >
               Join Us
@@ -96,7 +102,11 @@ export default function Navigation() {
               Contact
             </button>
             <button
-              onClick={() => scrollToSection('franchise')}
+              onClick={() => {
+                trackCTAClick('Join Us', 'Mobile Navigation');
+                trackFranchiseInterest('Mobile Navigation CTA');
+                scrollToSection('contact');
+              }}
               className="block w-full text-left px-3 py-2 bg-gradient-to-r from-hesa-green to-hesa-lightGreen text-white hover:shadow-lg transition-all"
             >
               Join Us

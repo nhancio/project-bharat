@@ -15,6 +15,7 @@ export default {
           saffron: '#ff9933',
           gray: '#4a5568',
           black: '#1a202c',
+          red: '#dc2626',
         },
       },
       fontFamily: {

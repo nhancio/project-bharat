@@ -17,6 +17,31 @@
     animation: fadeIn 0.6s ease-in-out;
   }
 
+  .animate-fade-in {
+    animation: fadeIn 0.8s ease-in-out forwards;
+    opacity: 0;
+  }
+
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  .animate-glow {
+    animation: glow 2s ease-in-out infinite alternate;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.6s ease-out forwards;
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  .animate-scale-in {
+    animation: scaleIn 0.5s ease-out forwards;
+    opacity: 0;
+    transform: scale(0.8);
+  }
+
   @keyframes fadeIn {
     from {
       opacity: 0;
@@ -25,6 +50,116 @@
     to {
       opacity: 1;
       transform: translateY(0);
+    }
+  }
+
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  @keyframes glow {
+    from {
+      box-shadow: 0 0 5px rgba(45, 80, 22, 0.3);
+    }
+    to {
+      box-shadow: 0 0 20px rgba(45, 80, 22, 0.6), 0 0 30px rgba(45, 80, 22, 0.4);
+    }
+  }
+
+  @keyframes slideUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes scaleIn {
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  /* Custom bounce animation with delay */
+  .animate-bounce-delay-1 {
+    animation: bounce 1s infinite;
+    animation-delay: 0.1s;
+  }
+
+  .animate-bounce-delay-2 {
+    animation: bounce 1s infinite;
+    animation-delay: 0.2s;
+  }
+
+  .animate-bounce-delay-3 {
+    animation: bounce 1s infinite;
+    animation-delay: 0.3s;
+  }
+
+  .animate-bounce-delay-4 {
+    animation: bounce 1s infinite;
+    animation-delay: 0.4s;
+  }
+
+  /* 3D Button Effect */
+  .btn-3d {
+    transform-style: preserve-3d;
+    transition: transform 0.3s ease;
+  }
+
+  .btn-3d:hover {
+    transform: translateY(-2px) rotateX(5deg);
+  }
+
+  .btn-3d:active {
+    transform: translateY(0) rotateX(0deg);
+  }
+
+  /* Text 3D Effect */
+  .text-3d {
+    text-shadow: 
+      1px 1px 0 #2d5016,
+      2px 2px 0 #2d5016,
+      3px 3px 0 #2d5016,
+      4px 4px 0 #2d5016,
+      5px 5px 0 #2d5016,
+      6px 6px 0 #2d5016,
+      7px 7px 0 #2d5016,
+      8px 8px 0 #2d5016,
+      9px 9px 0 #2d5016,
+      10px 10px 0 #2d5016;
+  }
+
+  /* Floating Animation */
+  .animate-float-slow {
+    animation: floatSlow 4s ease-in-out infinite;
+  }
+
+  @keyframes floatSlow {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-15px);
+    }
+  }
+
+  /* Pulse Glow Effect */
+  .animate-pulse-glow {
+    animation: pulseGlow 2s ease-in-out infinite alternate;
+  }
+
+  @keyframes pulseGlow {
+    from {
+      box-shadow: 0 0 5px rgba(45, 80, 22, 0.3);
+    }
+    to {
+      box-shadow: 0 0 25px rgba(45, 80, 22, 0.8), 0 0 35px rgba(45, 80, 22, 0.6);
     }
   }
 }

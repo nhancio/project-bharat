@@ -1,4 +1,4 @@
-import { Heart, Linkedin, Instagram } from 'lucide-react';
+import { Heart, Linkedin, Instagram, Facebook } from 'lucide-react';
 
 export default function Footer() {
   const scrollToSection = (id: string) => {
@@ -43,6 +43,15 @@ export default function Footer() {
               >
                 <Instagram size={20} className="text-white" />
               </a>
+              <a
+                href="https://www.facebook.com/people/HESA/61581521807091"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-white/10 p-2 rounded-lg hover:bg-hesa-saffron/30 transition-colors"
+                aria-label="Facebook"
+              >
+                <Facebook size={20} className="text-white" />
+              </a>
             </div>
           </div>
 
@@ -73,8 +82,8 @@ export default function Footer() {
           <div>
             <h4 className="font-semibold mb-4 text-lg">Contact</h4>
             <div className="space-y-2 text-blue-200">
-              <p>vamsi@hesaglobal.com</p>
-              <p>hesa.co</p>
+              <p>Hesaathi00@gmail.com</p>
+              <p>+91 82470 44737</p>
               <p className="text-sm">Hyderabad, Telangana</p>
             </div>
           </div>

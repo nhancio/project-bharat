@@ -1,4 +1,4 @@
-import { TrendingUp, Users, Activity, Heart } from 'lucide-react';
+import { TrendingUp, Users, Activity, Heart, DollarSign, Globe } from 'lucide-react';
 
 const stats = [
   {
@@ -30,6 +30,12 @@ const stats = [
     value: '45,000+',
     label: 'Hesaathis Across 7 States',
     description: 'Strong partner network'
+  },
+  {
+    icon: DollarSign,
+    value: '₹500Cr+',
+    label: 'Revenue Generated',
+    description: 'Total earnings by partners'
   }
 ];
 
