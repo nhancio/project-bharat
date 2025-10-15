@@ -30,7 +30,7 @@ export default function About() {
             
             <p className="text-lg text-hesa-gray leading-relaxed">
               Our <span className="font-semibold text-hesa-earth">'phygital' approach</span> combines physical presence with digital innovation, 
-              creating sustainable economic opportunities across 50,000+ villages. 🌾
+              creating sustainable economic opportunities across 1Lac+ villages. 🌾
             </p>
             
             <div className="space-y-4">
@@ -70,13 +70,13 @@ export default function About() {
           <div className="relative">
             <div className="bg-hesa-sage/20 rounded-2xl p-4 border-2 border-hesa-green/30 overflow-hidden">
               <img 
-                src="/hw-img1.jpg" 
-                alt="Rural Commerce in Action" 
+                src="/hesa_partner.jpg" 
+                alt="HESA Partners in Action" 
                 className="w-full h-full object-cover rounded-xl"
               />
             </div>
             <div className="absolute -bottom-6 -right-6 bg-gradient-to-r from-hesa-green to-hesa-lightGreen text-white p-6 rounded-xl shadow-xl">
-              <div className="text-3xl font-bold">45,000+</div>
+              <div className="text-3xl font-bold">70,000+</div>
               <div className="text-sm">Successful Partners</div>
             </div>
           </div>
@@ -86,7 +86,7 @@ export default function About() {
         <div className="mb-20">
           <div className="text-center mb-12">
             <h3 className="text-3xl sm:text-4xl font-bold text-hesa-green mb-4">
-              Why 45,000+ Entrepreneurs Choose HESA
+              Why 70,000+ Entrepreneurs Choose HESA
             </h3>
             <p className="text-xl text-hesa-gray max-w-3xl mx-auto">
               We provide everything you need to succeed in rural commerce
@@ -138,7 +138,7 @@ export default function About() {
                 Proven Business Model
               </h4>
               <p className="text-hesa-gray leading-relaxed mb-4">
-                Join a network that has generated ₹500Cr+ in revenue across 50,000+ villages.
+                Join a network that has generated ₹500Cr+ in revenue across 1Lac+ villages.
               </p>
               <ul className="space-y-2 text-sm text-hesa-gray">
                 <li>• Territory protection</li>

@@ -28,7 +28,7 @@ const benefits = [
   'Comprehensive training and ongoing support',
   'Marketing and brand support from HESA',
   'Fair commission structure and transparent pricing',
-  'Part of India\'s largest rural commerce network',
+  'Part of India\'s largest rural commerce network (70,000+ partners)',
   'Direct impact on community development'
 ];
 
@@ -109,7 +109,7 @@ export default function Franchise() {
             Ready to Transform Rural Commerce? 🌾
           </h3>
           <p className="text-xl text-amber-100 mb-8 max-w-2xl mx-auto">
-            Join thousands of successful Hesaathis who are making a difference in their communities while building sustainable businesses.
+            Join 70,000+ successful Hesaathis who are making a difference in their communities while building sustainable businesses.
           </p>
           <button
             onClick={scrollToContact}

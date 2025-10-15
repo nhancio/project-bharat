@@ -15,9 +15,9 @@ const stats = [
   },
   {
     icon: Activity,
-    value: '2.5M+',
-    label: 'Active Users Monthly',
-    description: 'Growing engagement'
+    value: '1Lac+',
+    label: 'Villages Connected',
+    description: 'Rural reach expansion'
   },
   {
     icon: Heart,
@@ -27,8 +27,8 @@ const stats = [
   },
   {
     icon: Users,
-    value: '45,000+',
-    label: 'Hesaathis Across 7 States',
+    value: '70,000+',
+    label: 'Hesaathis Across 8 States',
     description: 'Strong partner network'
   },
   {

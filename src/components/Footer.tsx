@@ -82,8 +82,8 @@ export default function Footer() {
           <div>
             <h4 className="font-semibold mb-4 text-lg">Contact</h4>
             <div className="space-y-2 text-blue-200">
-              <p>Hesaathi00@gmail.com</p>
-              <p>+91 82470 44737</p>
+              <p>ajay@hesaglobal.com</p>
+              <p>marketing@hesaglobal.com</p>
               <p className="text-sm">Hyderabad, Telangana</p>
             </div>
           </div>
@@ -95,8 +95,9 @@ export default function Footer() {
             </p>
             <p className="text-blue-200 text-sm">
               <strong>1M+</strong> families impacted<br/>
-              <strong>35,000+</strong> Hesaathis<br/>
-              <strong>50,000+</strong> villages
+              <strong>70,000+</strong> Hesaathis<br/>
+              <strong>1Lac+</strong> villages<br/>
+              <strong>8</strong> states
             </p>
           </div>
         </div>

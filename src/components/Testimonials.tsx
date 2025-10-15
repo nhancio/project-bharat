@@ -98,14 +98,14 @@ export default function Testimonials() {
 
         {/* Trust Indicators */}
         <div className="bg-gradient-to-r from-hesa-green to-hesa-lightGreen rounded-2xl p-8 text-white text-center">
-          <h3 className="text-2xl font-bold mb-4">Join 45,000+ Successful Partners</h3>
+          <h3 className="text-2xl font-bold mb-4">Join 70,000+ Successful Partners</h3>
           <div className="grid md:grid-cols-4 gap-6">
             <div>
               <div className="text-3xl font-bold mb-2">₹500Cr+</div>
               <div className="text-green-100">Total Revenue Generated</div>
             </div>
             <div>
-              <div className="text-3xl font-bold mb-2">50,000+</div>
+              <div className="text-3xl font-bold mb-2">1Lac+</div>
               <div className="text-green-100">Villages Served</div>
             </div>
             <div>
@@ -113,8 +113,8 @@ export default function Testimonials() {
               <div className="text-green-100">Families Impacted</div>
             </div>
             <div>
-              <div className="text-3xl font-bold mb-2">95%</div>
-              <div className="text-green-100">Partner Satisfaction</div>
+              <div className="text-3xl font-bold mb-2">8</div>
+              <div className="text-green-100">States Covered</div>
             </div>
           </div>
         </div>

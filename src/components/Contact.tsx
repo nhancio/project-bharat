@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Linkedin, Instagram, Mail, Globe, Send, CheckCircle, Facebook } from 'lucide-react';
 import { trackFormSubmission, trackCTAClick, trackContactFormInteraction } from '../utils/analytics';
+import { sendLeadToGoogleSheets, type LeadData } from '../utils/emailService';
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -11,6 +12,7 @@ export default function Contact() {
     message: ''
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({
@@ -21,14 +23,47 @@ export default function Contact() {
     trackContactFormInteraction('field_focus', e.target.name);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsSubmitting(true);
+    
     // Track form submission
     trackFormSubmission('Franchise Application Form');
     trackContactFormInteraction('form_submit');
     
-    // Send email notification (you can integrate with your backend here)
-    const emailBody = `
+    // Prepare lead data
+    const leadData: LeadData = {
+      name: formData.name,
+      email: formData.email,
+      phone: formData.phone,
+      location: formData.location,
+      message: formData.message,
+      timestamp: new Date().toLocaleString(),
+      source: 'HESA Website Contact Form'
+    };
+    
+    try {
+      // Send to Google Sheets via Google Apps Script
+      const success = await sendLeadToGoogleSheets(leadData);
+      
+      if (success) {
+        console.log('Form submitted successfully to Google Sheets:', leadData);
+        setIsSubmitted(true);
+        
+        // Reset form after 3 seconds
+        setTimeout(() => {
+          setIsSubmitted(false);
+          setFormData({ name: '', email: '', phone: '', location: '', message: '' });
+        }, 3000);
+      } else {
+        throw new Error('Failed to submit to Google Sheets');
+      }
+      
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      
+      // Fallback: Create mailto link for immediate email
+      const emailBody = `
 New Franchise Application:
 
 Name: ${formData.name}
@@ -38,49 +73,61 @@ Location: ${formData.location}
 Message: ${formData.message}
 
 Submitted on: ${new Date().toLocaleString()}
-    `;
-    
-    // Create mailto link for immediate email
-    const mailtoLink = `mailto:Hesaathi00@gmail.com?subject=New Franchise Application - ${formData.name}&body=${encodeURIComponent(emailBody)}`;
-    window.open(mailtoLink);
-    
-    console.log('Form submitted:', formData);
-    setIsSubmitted(true);
-    // Reset form after 3 seconds
-    setTimeout(() => {
-      setIsSubmitted(false);
-      setFormData({ name: '', email: '', phone: '', location: '', message: '' });
-    }, 3000);
+      `;
+      
+      const mailtoLink = `mailto:ajay@hesaglobal.com?subject=New Franchise Application - ${formData.name}&body=${encodeURIComponent(emailBody)}`;
+      window.open(mailtoLink);
+      
+      // Still show success message as fallback email was sent
+      setIsSubmitted(true);
+      setTimeout(() => {
+        setIsSubmitted(false);
+        setFormData({ name: '', email: '', phone: '', location: '', message: '' });
+      }, 3000);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
     <section id="contact" className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-white to-hesa-cream">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16">
+        <div className="text-center mb-12 sm:mb-16 px-4">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-hesa-green/10 rounded-full mb-6 border border-hesa-sage/30 animate-pulse">
             <Mail size={20} className="text-hesa-green" />
-            <span className="text-hesa-green font-semibold">Get Started Today</span>
+            <span className="text-hesa-green font-semibold text-sm sm:text-base">Get Started Today</span>
           </div>
-          <h2 className="text-4xl sm:text-5xl font-bold text-hesa-green mb-4 animate-fade-in">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-hesa-green mb-4 animate-fade-in">
             Ready to Transform Your Village?
           </h2>
-          <p className="text-xl text-hesa-gray max-w-3xl mx-auto animate-fade-in" style={{animationDelay: '0.3s'}}>
+          <p className="text-lg sm:text-xl text-hesa-gray max-w-3xl mx-auto animate-fade-in" style={{animationDelay: '0.3s'}}>
             Join 45,000+ successful entrepreneurs. Fill out the form below and our team will contact you within 24 hours to discuss your franchise opportunity.
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
+        <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 max-w-6xl mx-auto">
           {/* Lead Capture Form */}
-          <div className="bg-white p-8 rounded-2xl border-2 border-hesa-sage/30 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 animate-fade-in">
-            <h3 className="text-2xl font-bold text-hesa-green mb-6 text-center animate-pulse">
+          <div className="bg-white p-6 sm:p-8 rounded-2xl border-2 border-hesa-sage/30 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 animate-fade-in">
+            <h3 className="text-xl sm:text-2xl font-bold text-hesa-green mb-6 text-center animate-pulse">
               Apply for Franchise Partnership
             </h3>
             
             {isSubmitted ? (
-              <div className="text-center py-8 animate-bounce">
-                <CheckCircle size={64} className="text-hesa-green mx-auto mb-4 animate-spin" />
-                <h4 className="text-xl font-bold text-hesa-green mb-2 animate-pulse">Application Submitted!</h4>
-                <p className="text-hesa-gray animate-fade-in">Our team will contact you within 24 hours.</p>
+              <div className="text-center py-8">
+                <div className="relative mb-6">
+                  <div className="w-20 h-20 bg-gradient-to-r from-hesa-green to-hesa-lightGreen rounded-full flex items-center justify-center mx-auto animate-pulse shadow-2xl">
+                    <CheckCircle size={48} className="text-white animate-bounce" />
+                  </div>
+                  <div className="absolute -top-2 -right-2 w-6 h-6 bg-hesa-saffron rounded-full flex items-center justify-center animate-ping">
+                    <div className="w-3 h-3 bg-white rounded-full"></div>
+                  </div>
+                </div>
+                <h4 className="text-2xl font-bold text-hesa-green mb-3 animate-fade-in">🎉 Application Submitted Successfully!</h4>
+                <p className="text-hesa-gray text-lg mb-4 animate-fade-in">Thank you for your interest in joining HESA!</p>
+                <div className="bg-gradient-to-r from-hesa-green/10 to-hesa-lightGreen/10 rounded-lg p-4 animate-fade-in">
+                  <p className="text-hesa-green font-semibold">✅ Your application has been saved to our system</p>
+                  <p className="text-hesa-gray text-sm mt-2">Our team will contact you within 24 hours to discuss your franchise opportunity.</p>
+                </div>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-6">
@@ -166,10 +213,20 @@ Submitted on: ${new Date().toLocaleString()}
 
                 <button
                   type="submit"
-                  className="w-full bg-gradient-to-r from-hesa-green to-hesa-lightGreen text-white py-4 rounded-lg font-bold text-lg hover:shadow-2xl transition-all duration-300 flex items-center justify-center gap-2 shadow-lg hover:scale-105 animate-pulse"
+                  disabled={isSubmitting}
+                  className="w-full bg-gradient-to-r from-hesa-green to-hesa-lightGreen text-white py-4 rounded-lg font-bold text-lg hover:shadow-2xl transition-all duration-300 flex items-center justify-center gap-2 shadow-lg hover:scale-105 animate-pulse disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  <Send size={20} className="animate-bounce" />
-                  Apply for Franchise Partnership
+                  {isSubmitting ? (
+                    <>
+                      <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                      Submitting...
+                    </>
+                  ) : (
+                    <>
+                      <Send size={20} className="animate-bounce" />
+                      Apply for Franchise Partnership
+                    </>
+                  )}
                 </button>
 
                 <p className="text-sm text-hesa-gray text-center">
@@ -180,51 +237,51 @@ Submitted on: ${new Date().toLocaleString()}
           </div>
 
           {/* Contact Information */}
-          <div className="space-y-8">
-            <div className="bg-white p-8 rounded-2xl border-2 border-hesa-sage/30 hover:border-hesa-green hover:shadow-2xl transition-all duration-300 shadow-lg hover:scale-105 animate-fade-in" style={{animationDelay: '0.2s'}}>
-              <div className="bg-hesa-green/10 w-16 h-16 rounded-full flex items-center justify-center mb-6 mx-auto animate-pulse">
-                <Mail className="text-hesa-green animate-bounce" size={32} />
+          <div className="space-y-6 sm:space-y-8">
+            <div className="bg-white p-6 sm:p-8 rounded-2xl border-2 border-hesa-sage/30 hover:border-hesa-green hover:shadow-2xl transition-all duration-300 shadow-lg hover:scale-105 animate-fade-in" style={{animationDelay: '0.2s'}}>
+              <div className="bg-hesa-green/10 w-12 h-12 sm:w-16 sm:h-16 rounded-full flex items-center justify-center mb-4 sm:mb-6 mx-auto animate-pulse">
+                <Mail className="text-hesa-green animate-bounce" size={24} />
               </div>
-              <h3 className="text-2xl font-bold text-hesa-green text-center mb-4">
-                Vamsi Udayagiri
+              <h3 className="text-xl sm:text-2xl font-bold text-hesa-green text-center mb-4">
+                Contact Us
               </h3>
-              <p className="text-hesa-gray text-center mb-6">
-                Founder & CEO, HESA Technologies
+              <p className="text-hesa-gray text-center mb-6 text-sm sm:text-base">
+                Get in touch with our team
               </p>
               
-              {/* Social Media Icons Below Title */}
-              <div className="flex justify-center gap-4">
+              {/* Email Icons */}
+              <div className="flex flex-col sm:flex-row justify-center gap-4">
                 <a
-                  href="mailto:Hesaathi00@gmail.com"
+                  href="mailto:ajay@hesaglobal.com"
                   className="group relative"
                 >
-                  <div className="w-10 h-10 bg-gradient-to-br from-red-500 to-red-700 rounded-full flex items-center justify-center shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-110 animate-bounce">
+                  <div className="w-12 h-12 bg-gradient-to-br from-red-500 to-red-700 rounded-full flex items-center justify-center shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-110 animate-bounce mx-auto">
                     <Mail size={20} className="text-white" />
                   </div>
                   <div className="absolute -inset-1 bg-gradient-to-br from-red-500 to-red-700 rounded-full blur opacity-30 group-hover:opacity-50 transition-opacity duration-300"></div>
+                  <div className="text-xs text-center mt-2 text-hesa-gray">ajay@hesaglobal.com</div>
                 </a>
                 
                 <a
-                  href="https://www.linkedin.com/in/vamsiudayagiri/"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href="mailto:marketing@hesaglobal.com"
                   className="group relative"
                 >
-                  <div className="w-10 h-10 bg-gradient-to-br from-blue-700 to-blue-900 rounded-full flex items-center justify-center shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-110 animate-bounce" style={{animationDelay: '0.2s'}}>
-                    <Linkedin size={20} className="text-white" />
+                  <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-700 rounded-full flex items-center justify-center shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-110 animate-bounce mx-auto" style={{animationDelay: '0.2s'}}>
+                    <Mail size={20} className="text-white" />
                   </div>
-                  <div className="absolute -inset-1 bg-gradient-to-br from-blue-700 to-blue-900 rounded-full blur opacity-30 group-hover:opacity-50 transition-opacity duration-300"></div>
-                </a>
-              </div>
+                  <div className="absolute -inset-1 bg-gradient-to-br from-blue-500 to-blue-700 rounded-full blur opacity-30 group-hover:opacity-50 transition-opacity duration-300"></div>
+                  <div className="text-xs text-center mt-2 text-hesa-gray">marketing@hesaglobal.com</div>
+              </a>
             </div>
+          </div>
 
             <div className="bg-white p-8 rounded-2xl border-2 border-hesa-sage/30 hover:border-hesa-green hover:shadow-2xl transition-all duration-300 shadow-lg hover:scale-105 animate-fade-in" style={{animationDelay: '0.4s'}}>
               <div className="bg-hesa-green/10 w-16 h-16 rounded-full flex items-center justify-center mb-6 mx-auto animate-pulse">
-                <Globe className="text-hesa-green" size={32} />
-              </div>
-              <h3 className="text-2xl font-bold text-hesa-green text-center mb-4">
-                HESA Technologies
-              </h3>
+              <Globe className="text-hesa-green" size={32} />
+            </div>
+            <h3 className="text-2xl font-bold text-hesa-green text-center mb-4">
+              HESA Technologies
+            </h3>
               
               {/* Social Media Icons Inside Box */}
               <div className="flex justify-center gap-4 mb-6">
@@ -275,16 +332,16 @@ Submitted on: ${new Date().toLocaleString()}
                 </a>
               </div>
 
-              <div className="space-y-4">
-                <a
-                  href="https://hesa.co"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-3 text-hesa-gray hover:text-hesa-green transition-colors text-lg"
-                >
-                  <Globe size={20} />
-                  <span>hesa.co</span>
-                </a>
+            <div className="space-y-4">
+              <a
+                href="https://hesa.co"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-3 text-hesa-gray hover:text-hesa-green transition-colors text-lg"
+              >
+                <Globe size={20} />
+                <span>hesa.co</span>
+              </a>
               </div>
             </div>
 

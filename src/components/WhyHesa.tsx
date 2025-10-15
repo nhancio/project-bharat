@@ -13,8 +13,8 @@ const features = [
   },
   {
     icon: Globe,
-    title: '7 States Coverage',
-    description: 'Expanding presence across 7 states with 45,000+ active Hesaathis partners.'
+    title: '8 States Coverage',
+    description: 'Expanding presence across 8 states with 70,000+ active Hesaathis partners.'
   },
   {
     icon: Shield,
@@ -70,15 +70,15 @@ export default function WhyHesa() {
             <div>
               <div className="flex items-center gap-4 mb-6">
                 <img 
-                  src="/vamsi.jpeg" 
-                  alt="Vamsi Udayagiri" 
+                  src="/heas-logo.jpeg" 
+                  alt="HESA Technologies" 
                   className="w-24 h-24 rounded-full object-cover border-4 border-white shadow-lg"
                 />
                 <div>
                   <h3 className="text-3xl font-bold">
                     About HESA Technologies
                   </h3>
-                  <p className="text-green-100 text-sm">Led by Vamsi Udayagiri</p>
+                  <p className="text-green-100 text-sm">Empowering Rural India</p>
                 </div>
               </div>
               <p className="text-green-50 text-lg leading-relaxed mb-6">
@@ -98,11 +98,11 @@ export default function WhyHesa() {
                 <div className="text-sm text-green-100">Households</div>
               </div>
               <div className="bg-white/10 p-6 rounded-xl backdrop-blur-sm border border-white/20">
-                <div className="text-3xl font-bold text-hesa-saffron mb-2">45K+</div>
+                <div className="text-3xl font-bold text-hesa-saffron mb-2">70K+</div>
                 <div className="text-sm text-green-100">Partners</div>
               </div>
               <div className="bg-white/10 p-6 rounded-xl backdrop-blur-sm border border-white/20">
-                <div className="text-3xl font-bold text-hesa-saffron mb-2">7</div>
+                <div className="text-3xl font-bold text-hesa-saffron mb-2">8</div>
                 <div className="text-sm text-green-100">States</div>
               </div>
             </div>

@@ -19,10 +19,9 @@ export default function Navigation() {
         <div className="flex justify-between items-center h-20">
           <div className="flex items-center gap-3">
             <img src="/heas-logo.jpeg" alt="HESA Logo" className="h-12 w-12 object-contain rounded-lg" />
-            <div className="flex flex-col items-center">
-              <button className="bg-gradient-to-r from-hesa-green to-hesa-lightGreen text-white px-4 py-2 rounded-lg font-bold text-sm hover:shadow-lg transition-all duration-300 hover:scale-105 btn-3d">
-                Project Bharat
-              </button>
+            <div className="flex flex-col">
+              <span className="text-hesa-green font-bold text-lg">HESA</span>
+              <span className="text-hesa-gray text-xs">Technologies</span>
             </div>
           </div>
 
