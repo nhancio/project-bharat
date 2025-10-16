@@ -15,13 +15,12 @@ export default function Navigation() {
 
   return (
     <nav className="fixed top-0 left-0 right-0 bg-white shadow-md z-50 border-b-2 border-hesa-sage/20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w10xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           <div className="flex items-center gap-3">
-            <img src="/heas-logo.jpeg" alt="HESA Logo" className="h-12 w-12 object-contain rounded-lg" />
+            <img src="/heas-logo.jpeg" alt="HESA Logo" className="h-16 w-16 object-contain rounded-lg" />
             <div className="flex flex-col">
-              <span className="text-hesa-green font-bold text-lg">HESA</span>
-              <span className="text-hesa-gray text-xs">Technologies</span>
+              <span className="text-hesa-green font-bold text-xl">HESA</span>
             </div>
           </div>
 

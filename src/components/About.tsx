@@ -16,21 +16,20 @@ export default function About() {
           <div className="space-y-6">
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-hesa-green/10 rounded-full border border-hesa-sage/30">
               <Target size={20} className="text-hesa-green" />
-              <span className="text-hesa-green font-semibold">About Project Bharath</span>
+              <span className="text-hesa-green font-semibold">About HESA Technologies</span>
             </div>
             
             <h2 className="text-4xl sm:text-5xl font-bold text-hesa-green leading-tight">
-              The Future of Rural Commerce is Here
+              Empowering Rural India
             </h2>
             
             <p className="text-lg sm:text-xl text-hesa-gray leading-relaxed">
-              Project Bharath is India's most successful <span className="text-hesa-green font-bold">rural commerce franchise model</span>, 
-              empowering entrepreneurs to build profitable businesses while serving their communities.
+              HESA Technologies is revolutionizing rural commerce by connecting traditional markets with modern digital solutions. 
+              We empower rural communities through technology, creating sustainable growth opportunities.
             </p>
             
             <p className="text-lg text-hesa-gray leading-relaxed">
-              Our <span className="font-semibold text-hesa-earth">'phygital' approach</span> combines physical presence with digital innovation, 
-              creating sustainable economic opportunities across 1Lac+ villages. 🌾
+              Our mission is to bridge the rural-urban divide and unlock the immense potential of India's village ecosystems. 🌾
             </p>
             
             <div className="space-y-4">
@@ -68,12 +67,18 @@ export default function About() {
           </div>
 
           <div className="relative">
-            <div className="bg-hesa-sage/20 rounded-2xl p-4 border-2 border-hesa-green/30 overflow-hidden">
-              <img 
-                src="/hesa_partner.jpg" 
-                alt="HESA Partners in Action" 
-                className="w-full h-full object-cover rounded-xl"
-              />
+            <div className="bg-hesa-sage/20 rounded-2xl p-8 border-2 border-hesa-green/30 flex items-center justify-center">
+              <div className="flex items-center gap-4">
+                <img 
+                  src="/heas-logo.jpeg" 
+                  alt="HESA Technologies Logo" 
+                  className="w-24 h-16 object-contain rounded-lg"
+                />
+                <div className="text-center">
+                  <div className="text-hesa-green font-bold text-2xl">HESA</div>
+                  <div className="text-hesa-gray text-sm">Technologies</div>
+                </div>
+              </div>
             </div>
             <div className="absolute -bottom-6 -right-6 bg-gradient-to-r from-hesa-green to-hesa-lightGreen text-white p-6 rounded-xl shadow-xl">
               <div className="text-3xl font-bold">70,000+</div>

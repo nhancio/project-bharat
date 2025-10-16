@@ -162,4 +162,30 @@
       box-shadow: 0 0 25px rgba(45, 80, 22, 0.8), 0 0 35px rgba(45, 80, 22, 0.6);
     }
   }
+
+  /* Scrolling Animation */
+  .animate-scroll-right-to-left {
+    animation: scrollRightToLeft 60s linear infinite;
+    width: calc(200% + 2rem);
+  }
+
+  @keyframes scrollRightToLeft {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  /* Pause animation on hover */
+  .animate-scroll-right-to-left:hover {
+    animation-play-state: paused;
+  }
+
+  /* Smooth scrolling container */
+  .testimonials-scroll-container {
+    overflow: hidden;
+    position: relative;
+  }
 }
