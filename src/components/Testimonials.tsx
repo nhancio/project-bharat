@@ -126,7 +126,7 @@ export default function Testimonials() {
 
   return (
     <section id="testimonials" className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-hesa-cream to-white">
-      <div className="max-w-7xl mx-auto">
+      <div className="w-full">
         <div className="text-center mb-16">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-hesa-green/10 rounded-full mb-6 border border-hesa-sage/30">
             <Star size={20} className="text-hesa-saffron fill-hesa-saffron" />
@@ -281,6 +281,45 @@ export default function Testimonials() {
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+
+        {/* Real Partners Store Images */}
+        <div className="mb-16">
+          
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="bg-white rounded-2xl shadow-xl border-2 border-hesa-sage/30 overflow-hidden hover:border-hesa-green hover:shadow-2xl transition-all">
+              <img 
+                src="/store/store1.jpeg" 
+                alt="HESA Partner Store 1" 
+                className="w-full h-64 object-cover"
+              />
+              <div className="p-6">
+                <p className="text-hesa-gray">A thriving HESA franchise serving multiple villages with comprehensive digital services.</p>
+              </div>
+            </div>
+            
+            <div className="bg-white rounded-2xl shadow-xl border-2 border-hesa-sage/30 overflow-hidden hover:border-hesa-green hover:shadow-2xl transition-all">
+              <img 
+                src="/store/store2.jpeg" 
+                alt="HESA Partner Store 2" 
+                className="w-full h-64 object-cover"
+              />
+              <div className="p-6">
+                <p className="text-hesa-gray">Modern setup providing e-commerce, financial services, and agricultural solutions.</p>
+              </div>
+            </div>
+            
+            <div className="bg-white rounded-2xl shadow-xl border-2 border-hesa-sage/30 overflow-hidden hover:border-hesa-green hover:shadow-2xl transition-all">
+              <img 
+                src="/store/store3.jpeg" 
+                alt="HESA Partner Store 3" 
+                className="w-full h-64 object-cover"
+              />
+              <div className="p-6">
+                <p className="text-hesa-gray">Community-focused franchise bringing digital transformation to rural areas.</p>
+              </div>
+            </div>
           </div>
         </div>
 

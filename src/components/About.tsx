@@ -11,7 +11,7 @@ export default function About() {
 
   return (
     <section id="about" className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
-      <div className="max-w-7xl mx-auto">
+      <div className="w-full">
         <div className="grid lg:grid-cols-2 gap-12 items-center mb-20">
           <div className="space-y-6">
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-hesa-green/10 rounded-full border border-hesa-sage/30">
@@ -67,18 +67,12 @@ export default function About() {
           </div>
 
           <div className="relative">
-            <div className="bg-hesa-sage/20 rounded-2xl p-8 border-2 border-hesa-green/30 flex items-center justify-center">
-              <div className="flex items-center gap-4">
-                <img 
-                  src="/heas-logo.jpeg" 
-                  alt="HESA Technologies Logo" 
-                  className="w-24 h-16 object-contain rounded-lg"
-                />
-                <div className="text-center">
-                  <div className="text-hesa-green font-bold text-2xl">HESA</div>
-                  <div className="text-hesa-gray text-sm">Technologies</div>
-                </div>
-              </div>
+            <div className="bg-hesa-sage/20 rounded-2xl p-4 border-2 border-hesa-green/30 overflow-hidden">
+              <img 
+                src="/hesa_partner.jpg" 
+                alt="HESA Partners in Action" 
+                className="w-full h-full object-cover rounded-xl"
+              />
             </div>
             <div className="absolute -bottom-6 -right-6 bg-gradient-to-r from-hesa-green to-hesa-lightGreen text-white p-6 rounded-xl shadow-xl">
               <div className="text-3xl font-bold">70,000+</div>

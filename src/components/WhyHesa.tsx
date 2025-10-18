@@ -36,7 +36,7 @@ const features = [
 export default function WhyHesa() {
   return (
     <section id="why-hesa" className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-hesa-cream to-white">
-      <div className="max-w-7xl mx-auto">
+      <div className="w-full">
         <div className="text-center mb-16">
           <h2 className="text-4xl sm:text-5xl font-bold text-hesa-green mb-4">
             Why Partner with HESA?
@@ -69,11 +69,6 @@ export default function WhyHesa() {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
               <div className="flex items-center gap-4 mb-6">
-                <img 
-                  src="/heas-logo.jpeg" 
-                  alt="HESA Technologies" 
-                  className="w-24 h-24 rounded-full object-cover border-4 border-white shadow-lg"
-                />
                 <div>
                   <h3 className="text-3xl font-bold">
                     About HESA Technologies

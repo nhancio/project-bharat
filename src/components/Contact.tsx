@@ -91,7 +91,7 @@ Submitted on: ${new Date().toLocaleString()}
 
   return (
     <section id="contact" className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-white to-hesa-cream">
-      <div className="max-w-7xl mx-auto">
+      <div className="w-full">
         <div className="text-center mb-12 sm:mb-16 px-4">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-hesa-green/10 rounded-full mb-6 border border-hesa-sage/30 animate-pulse">
             <Mail size={20} className="text-hesa-green" />

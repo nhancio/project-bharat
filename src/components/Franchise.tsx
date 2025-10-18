@@ -42,7 +42,7 @@ export default function Franchise() {
 
   return (
     <section id="franchise" className="py-20 px-4 sm:px-6 lg:px-8 bg-hesa-cream">
-      <div className="max-w-7xl mx-auto">
+      <div className="w-full">
         <div className="text-center mb-16">
           <h2 className="text-4xl sm:text-5xl font-bold text-hesa-green mb-4">
             Franchise Model

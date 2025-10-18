@@ -1,4 +1,4 @@
-import { ArrowRight, Target, Star, Users, TrendingUp } from 'lucide-react';
+import { ArrowRight, Target, Users, TrendingUp } from 'lucide-react';
 import { trackCTAClick, trackFranchiseInterest } from '../utils/analytics';
 
 export default function Hero() {
@@ -11,7 +11,7 @@ export default function Hero() {
 
   return (
     <section className="relative pt-32 pb-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-hesa-cream via-hesa-sage/10 to-hesa-cream overflow-hidden">
-      <div className="max-w-7xl mx-auto">
+      <div className="w-full">
         <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
           {/* Left side - Image */}
           <div className="w-full lg:w-1/2 flex justify-center lg:justify-start">
