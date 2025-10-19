@@ -12,9 +12,9 @@ export default function Hero() {
   return (
     <section className="relative pt-32 pb-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-hesa-cream via-hesa-sage/10 to-hesa-cream overflow-hidden">
       <div className="w-full">
-        <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
+        <div className="flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-12">
           {/* Left side - Image */}
-          <div className="w-full lg:w-1/2 flex justify-center lg:justify-start">
+          <div className="w-full lg:w-1/2 flex justify-center">
             <div className="relative">
               <img 
                 src="/ut1.png" 
@@ -28,7 +28,7 @@ export default function Hero() {
           </div>
 
           {/* Right side - Content */}
-          <div className="w-full lg:w-1/2 text-center lg:text-left">
+          <div className="w-full lg:w-1/2 text-center">
 
             {/* Main Headline - Problem-Solution Focused */}
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-hesa-green mb-4 sm:mb-6 leading-tight">
@@ -44,7 +44,7 @@ export default function Hero() {
             </p>
 
             {/* Social Proof Stats */}
-            <div className="flex flex-wrap justify-center lg:justify-start gap-4 sm:gap-6 md:gap-8 mb-8 sm:mb-12">
+            <div className="flex flex-wrap justify-center gap-4 sm:gap-6 md:gap-8 mb-8 sm:mb-12">
               <div className="flex items-center gap-2 bg-white/90 backdrop-blur-sm px-3 sm:px-4 py-2 rounded-full shadow-lg">
                 <Users className="text-hesa-green" size={16} />
                 <span className="text-hesa-gray font-semibold text-sm sm:text-base">70k+ Partners</span>
@@ -65,7 +65,7 @@ export default function Hero() {
 
 
             {/* Offering Icons */}
-            <div className="flex flex-wrap justify-center lg:justify-start gap-4 sm:gap-6 mb-8 sm:mb-12">
+            <div className="flex flex-wrap justify-center gap-4 sm:gap-6 mb-8 sm:mb-12">
               <div className="flex flex-col items-center gap-2 bg-white/80 p-3 sm:p-4 rounded-xl shadow-md hover:shadow-lg transition-all">
                 <img src="/off_icon2.png" alt="E-Commerce" className="w-12 h-12 sm:w-16 sm:h-16 object-contain" />
                 <span className="text-xs sm:text-sm text-hesa-gray font-semibold">E-Commerce</span>
@@ -85,7 +85,7 @@ export default function Hero() {
             </div>
 
             {/* Primary CTAs */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center mb-6 sm:mb-8">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-6 sm:mb-8">
               <button
                 onClick={() => {
                   trackCTAClick('Start Your Franchise Today', 'Hero Section');
@@ -110,7 +110,7 @@ export default function Hero() {
 
             {/* Urgency/Scarcity */}
             <div className="bg-gradient-to-r from-hesa-saffron/20 to-hesa-green/20 rounded-xl p-4">
-              <p className="text-hesa-gray font-semibold text-sm sm:text-base text-center lg:text-left">
+              <p className="text-hesa-gray font-semibold text-sm sm:text-base text-center">
                 ⚡ Limited spots available in your district - Apply now to secure your territory!
               </p>
             </div>
