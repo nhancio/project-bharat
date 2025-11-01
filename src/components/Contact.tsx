@@ -159,7 +159,7 @@ Submitted on: ${new Date().toLocaleString()}
                       onChange={handleInputChange}
                       required
                       className="w-full px-4 py-3 border-2 border-hesa-sage/30 rounded-lg focus:border-hesa-green focus:outline-none transition-all duration-300 hover:shadow-lg focus:shadow-xl focus:scale-105"
-                      placeholder="+91 82470 44737"
+                      placeholder="+91 9676850926"
                     />
                   </div>
                 </div>
@@ -354,11 +354,11 @@ Submitted on: ${new Date().toLocaleString()}
                 Call us directly for instant answers to your questions about franchise opportunities.
               </p>
               <a
-                href="tel:+918247044737"
+                href="tel:+919676850926"
                 onClick={() => trackCTAClick('Call Now', 'Contact Section')}
                 className="block w-full bg-white text-hesa-green py-3 rounded-lg font-semibold text-center hover:bg-hesa-cream transition-all duration-300 hover:scale-105 animate-bounce"
               >
-                Call Now: +91 82470 44737
+                Call Now: +91 9676850926
               </a>
             </div>
           </div>
