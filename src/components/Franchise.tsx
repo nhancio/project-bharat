@@ -29,7 +29,8 @@ const benefits = [
   'Marketing and brand support from HESA',
   'Fair commission structure and transparent pricing',
   'Part of India\'s largest rural commerce network (70,000+ partners)',
-  'Direct impact on community development'
+  'Direct impact on community development',
+  '2x returns in 42 months'
 ];
 
 export default function Franchise() {

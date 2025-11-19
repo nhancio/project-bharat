@@ -47,11 +47,11 @@ export default function Hero() {
             <div className="flex flex-wrap justify-center gap-4 sm:gap-6 md:gap-8 mb-8 sm:mb-12">
               <div className="flex items-center gap-2 bg-white/90 backdrop-blur-sm px-3 sm:px-4 py-2 rounded-full shadow-lg">
                 <Users className="text-hesa-green" size={16} />
-                <span className="text-hesa-gray font-semibold text-sm sm:text-base">70k+ Partners</span>
+                <span className="text-hesa-gray font-semibold text-sm sm:text-base">70,000+ Partners</span>
               </div>
               <div className="flex items-center gap-2 bg-white/90 backdrop-blur-sm px-3 sm:px-4 py-2 rounded-full shadow-lg">
                 <TrendingUp className="text-hesa-green" size={16} />
-                <span className="text-hesa-gray font-semibold text-sm sm:text-base">₹500Cr+ Revenue</span>
+                <span className="text-hesa-gray font-semibold text-sm sm:text-base">₹1700Cr+ Revenue</span>
               </div>
               <div className="flex items-center gap-2 bg-white/90 backdrop-blur-sm px-3 sm:px-4 py-2 rounded-full shadow-lg">
                 <Target className="text-hesa-green" size={16} />

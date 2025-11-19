@@ -33,7 +33,7 @@ const stats = [
   },
   {
     icon: DollarSign,
-    value: '₹500Cr+',
+    value: '₹1700Cr+',
     label: 'Revenue Generated',
     description: 'Total earnings by partners'
   }

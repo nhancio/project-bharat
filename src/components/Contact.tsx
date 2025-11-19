@@ -101,7 +101,7 @@ Submitted on: ${new Date().toLocaleString()}
             Ready to Transform Your Village?
           </h2>
           <p className="text-lg sm:text-xl text-hesa-gray max-w-3xl mx-auto animate-fade-in" style={{animationDelay: '0.3s'}}>
-            Join 45,000+ successful entrepreneurs. Fill out the form below and our team will contact you within 24 hours to discuss your franchise opportunity.
+            Join 70,000+ successful entrepreneurs. Fill out the form below and our team will contact you within 24 hours to discuss your franchise opportunity.
           </p>
         </div>
 

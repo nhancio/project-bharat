@@ -286,6 +286,14 @@ export default function Testimonials() {
 
         {/* Real Partners Store Images */}
         <div className="mb-16">
+          <div className="text-center mb-12">
+            <h3 className="text-3xl sm:text-4xl font-bold text-hesa-green mb-4">
+              We distribute these brands across 1lac+ villages
+            </h3>
+            <p className="text-xl text-hesa-gray max-w-3xl mx-auto">
+              See the actual stores and success stories from our franchise partners across India
+            </p>
+          </div>
           
           <div className="grid md:grid-cols-3 gap-8">
             <div className="bg-white rounded-2xl shadow-xl border-2 border-hesa-sage/30 overflow-hidden hover:border-hesa-green hover:shadow-2xl transition-all">
@@ -328,7 +336,7 @@ export default function Testimonials() {
           <h3 className="text-2xl font-bold mb-4">Join 70,000+ Successful Partners</h3>
           <div className="grid md:grid-cols-4 gap-6">
             <div>
-              <div className="text-3xl font-bold mb-2">₹500Cr+</div>
+              <div className="text-3xl font-bold mb-2">₹1700Cr+</div>
               <div className="text-green-100">Total Revenue Generated</div>
             </div>
             <div>

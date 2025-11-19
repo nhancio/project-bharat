@@ -74,10 +74,6 @@ export default function About() {
                 className="w-full h-full object-cover rounded-xl"
               />
             </div>
-            <div className="absolute -bottom-6 -right-6 bg-gradient-to-r from-hesa-green to-hesa-lightGreen text-white p-6 rounded-xl shadow-xl">
-              <div className="text-3xl font-bold">70,000+</div>
-              <div className="text-sm">Successful Partners</div>
-            </div>
           </div>
         </div>
 
@@ -137,7 +133,7 @@ export default function About() {
                 Proven Business Model
               </h4>
               <p className="text-hesa-gray leading-relaxed mb-4">
-                Join a network that has generated ₹500Cr+ in revenue across 1Lac+ villages.
+                Join a network that has generated ₹1700Cr+ in revenue across 1Lac+ villages.
               </p>
               <ul className="space-y-2 text-sm text-hesa-gray">
                 <li>• Territory protection</li>
