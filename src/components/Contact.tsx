@@ -22,9 +22,26 @@ export default function Contact() {
     message: ''
   });
 
-  // Initialize EmailJS on component mount
+  // Initialize EmailJS on component mount and check configuration
   useEffect(() => {
     initEmailJS();
+    
+    // Check if EmailJS is properly configured (only in development)
+    if (import.meta.env.DEV) {
+      const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+      const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+      const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+      
+      if (!serviceId || !templateId || !publicKey) {
+        console.warn('⚠️ EmailJS environment variables are missing!');
+        console.warn('Please ensure these are set in your .env file or Netlify environment variables:');
+        console.warn('- VITE_EMAILJS_SERVICE_ID');
+        console.warn('- VITE_EMAILJS_TEMPLATE_ID');
+        console.warn('- VITE_EMAILJS_PUBLIC_KEY');
+      } else {
+        console.log('✅ EmailJS configuration detected');
+      }
+    }
   }, []);
 
   // Validation functions
@@ -174,7 +191,7 @@ export default function Contact() {
     
     try {
       // Send email via EmailJS
-      const emailSuccess = await sendFranchiseApplicationEmail({
+      const emailResult = await sendFranchiseApplicationEmail({
         name: formData.name,
         email: formData.email,
         phone: formData.phone.replace(/\D/g, ''),
@@ -190,8 +207,8 @@ export default function Contact() {
         console.warn('Google Sheets submission failed (non-critical):', sheetsError);
       }
       
-      if (emailSuccess) {
-        console.log('Form submitted successfully via EmailJS:', leadData);
+      if (emailResult.success) {
+        console.log('✅ Form submitted successfully via EmailJS:', leadData);
         setIsSubmitted(true);
         
         // Reset form after 3 seconds
@@ -201,14 +218,26 @@ export default function Contact() {
           setErrors({ name: '', email: '', phone: '', location: '', message: '' });
         }, 3000);
       } else {
-        throw new Error('Failed to send email via EmailJS');
+        // EmailJS failed - show error to user instead of falling back to mailto
+        console.error('❌ EmailJS failed:', emailResult.error);
+        alert(`Failed to send email: ${emailResult.error}\n\nPlease check the browser console for details or contact support.`);
+        throw new Error(emailResult.error || 'Failed to send email via EmailJS');
       }
       
-    } catch (error) {
-      console.error('Error submitting form:', error);
+    } catch (error: any) {
+      console.error('❌ Error submitting form:', error);
       
-      // Fallback: Create mailto link for immediate email
-      const emailBody = `
+      // Only use mailto as last resort if EmailJS completely fails
+      // This should not happen in production if EmailJS is properly configured
+      const errorMessage = error?.message || 'Unknown error occurred';
+      
+      // Show user-friendly error message
+      const shouldUseMailto = confirm(
+        `Unable to send email automatically.\n\nError: ${errorMessage}\n\nWould you like to send the email manually using your email client?`
+      );
+      
+      if (shouldUseMailto) {
+        const emailBody = `
 New Franchise Application:
 
 Name: ${formData.name}
@@ -218,18 +247,14 @@ Location: ${formData.location}
 Message: ${formData.message}
 
 Submitted on: ${new Date().toLocaleString()}
-      `;
+        `;
+        
+        const mailtoLink = `mailto:ajay@hesaglobal.com?subject=New Franchise Application - ${formData.name}&body=${encodeURIComponent(emailBody)}`;
+        window.open(mailtoLink);
+      }
       
-      const mailtoLink = `mailto:ajay@hesaglobal.com?subject=New Franchise Application - ${formData.name}&body=${encodeURIComponent(emailBody)}`;
-      window.open(mailtoLink);
-      
-      // Still show success message as fallback email was sent
-      setIsSubmitted(true);
-      setTimeout(() => {
-        setIsSubmitted(false);
-        setFormData({ name: '', email: '', phone: '', location: '', message: '' });
-        setErrors({ name: '', email: '', phone: '', location: '', message: '' });
-      }, 3000);
+      // Don't show success message if EmailJS failed
+      // User needs to know there was an issue
     } finally {
       setIsSubmitting(false);
     }
