@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Linkedin, Instagram, Mail, Globe, Send, CheckCircle, Facebook } from 'lucide-react';
 import { trackFormSubmission, trackCTAClick, trackContactFormInteraction } from '../utils/analytics';
 import { sendLeadToGoogleSheets, type LeadData } from '../utils/emailService';
+import { initEmailJS, sendFranchiseApplicationEmail } from '../utils/emailjsService';
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -13,18 +14,147 @@ export default function Contact() {
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errors, setErrors] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    location: '',
+    message: ''
+  });
+
+  // Initialize EmailJS on component mount
+  useEffect(() => {
+    initEmailJS();
+  }, []);
+
+  // Validation functions
+  const validateEmail = (email: string): boolean => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const validatePhone = (phone: string): boolean => {
+    // Remove any spaces, dashes, or other characters
+    const cleanedPhone = phone.replace(/\D/g, '');
+    // Check if it's exactly 10 digits and starts with 9, 8, 7, or 6
+    const phoneRegex = /^[6789]\d{9}$/;
+    return phoneRegex.test(cleanedPhone);
+  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    
+    let processedValue = value;
+
+    // For phone input, only allow numeric digits and limit to 10 digits
+    if (name === 'phone') {
+      // Remove all non-numeric characters
+      processedValue = value.replace(/\D/g, '');
+      // Limit to 10 digits
+      if (processedValue.length > 10) {
+        processedValue = processedValue.slice(0, 10);
+      }
+    }
+    
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [name]: processedValue
     });
+
+    // Clear error for this field when user starts typing
+    setErrors({
+      ...errors,
+      [name]: ''
+    });
+
+    // Real-time validation
+    if (name === 'email' && processedValue && !validateEmail(processedValue)) {
+      setErrors({
+        ...errors,
+        email: 'Please enter a valid email address'
+      });
+    } else if (name === 'phone' && processedValue) {
+      if (processedValue.length > 0 && !validatePhone(processedValue)) {
+        if (processedValue.length !== 10) {
+          setErrors({
+            ...errors,
+            phone: 'Phone number must be exactly 10 digits'
+          });
+        } else if (!/^[6789]/.test(processedValue)) {
+          setErrors({
+            ...errors,
+            phone: 'Phone number must start with 9, 8, 7, or 6'
+          });
+        } else {
+          setErrors({
+            ...errors,
+            phone: 'Please enter a valid phone number'
+          });
+        }
+      }
+    }
+
     // Track form field interactions
-    trackContactFormInteraction('field_focus', e.target.name);
+    trackContactFormInteraction('field_focus', name);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Validate all fields
+    const newErrors = {
+      name: '',
+      email: '',
+      phone: '',
+      location: '',
+      message: ''
+    };
+
+    let isValid = true;
+
+    // Validate name
+    if (!formData.name.trim()) {
+      newErrors.name = 'Name is required';
+      isValid = false;
+    }
+
+    // Validate email
+    if (!formData.email.trim()) {
+      newErrors.email = 'Email is required';
+      isValid = false;
+    } else if (!validateEmail(formData.email)) {
+      newErrors.email = 'Please enter a valid email address';
+      isValid = false;
+    }
+
+    // Validate phone
+    if (!formData.phone.trim()) {
+      newErrors.phone = 'Phone number is required';
+      isValid = false;
+    } else if (!validatePhone(formData.phone)) {
+      const cleanedPhone = formData.phone.replace(/\D/g, '');
+      if (cleanedPhone.length !== 10) {
+        newErrors.phone = 'Phone number must be exactly 10 digits';
+      } else if (!/^[6789]/.test(cleanedPhone)) {
+        newErrors.phone = 'Phone number must start with 9, 8, 7, or 6';
+      } else {
+        newErrors.phone = 'Please enter a valid phone number';
+      }
+      isValid = false;
+    }
+
+    // Validate location
+    if (!formData.location.trim()) {
+      newErrors.location = 'Location is required';
+      isValid = false;
+    }
+
+    // Set errors and return if validation fails
+    if (!isValid) {
+      setErrors(newErrors);
+      return;
+    }
+
     setIsSubmitting(true);
     
     // Track form submission
@@ -35,7 +165,7 @@ export default function Contact() {
     const leadData: LeadData = {
       name: formData.name,
       email: formData.email,
-      phone: formData.phone,
+      phone: formData.phone.replace(/\D/g, ''), // Clean phone number
       location: formData.location,
       message: formData.message,
       timestamp: new Date().toLocaleString(),
@@ -43,20 +173,35 @@ export default function Contact() {
     };
     
     try {
-      // Send to Google Sheets via Google Apps Script
-      const success = await sendLeadToGoogleSheets(leadData);
+      // Send email via EmailJS
+      const emailSuccess = await sendFranchiseApplicationEmail({
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone.replace(/\D/g, ''),
+        location: formData.location,
+        message: formData.message
+      });
+
+      // Also try to send to Google Sheets (optional, for backup)
+      let sheetsSuccess = false;
+      try {
+        sheetsSuccess = await sendLeadToGoogleSheets(leadData);
+      } catch (sheetsError) {
+        console.warn('Google Sheets submission failed (non-critical):', sheetsError);
+      }
       
-      if (success) {
-        console.log('Form submitted successfully to Google Sheets:', leadData);
+      if (emailSuccess) {
+        console.log('Form submitted successfully via EmailJS:', leadData);
         setIsSubmitted(true);
         
         // Reset form after 3 seconds
         setTimeout(() => {
           setIsSubmitted(false);
           setFormData({ name: '', email: '', phone: '', location: '', message: '' });
+          setErrors({ name: '', email: '', phone: '', location: '', message: '' });
         }, 3000);
       } else {
-        throw new Error('Failed to submit to Google Sheets');
+        throw new Error('Failed to send email via EmailJS');
       }
       
     } catch (error) {
@@ -83,6 +228,7 @@ Submitted on: ${new Date().toLocaleString()}
       setTimeout(() => {
         setIsSubmitted(false);
         setFormData({ name: '', email: '', phone: '', location: '', message: '' });
+        setErrors({ name: '', email: '', phone: '', location: '', message: '' });
       }, 3000);
     } finally {
       setIsSubmitting(false);
@@ -143,9 +289,16 @@ Submitted on: ${new Date().toLocaleString()}
                       value={formData.name}
                       onChange={handleInputChange}
                       required
-                      className="w-full px-4 py-3 border-2 border-hesa-sage/30 rounded-lg focus:border-hesa-green focus:outline-none transition-all duration-300 hover:shadow-lg focus:shadow-xl focus:scale-105"
+                      className={`w-full px-4 py-3 border-2 rounded-lg focus:outline-none transition-all duration-300 ${
+                        errors.name 
+                          ? 'border-red-500 focus:border-red-500' 
+                          : 'border-hesa-sage/30 focus:border-hesa-green hover:shadow-lg focus:shadow-xl'
+                      }`}
                       placeholder="Enter your full name"
                     />
+                    {errors.name && (
+                      <p className="text-red-500 text-sm mt-1">{errors.name}</p>
+                    )}
                   </div>
                   <div>
                     <label htmlFor="phone" className="block text-sm font-semibold text-hesa-gray mb-2">
@@ -158,9 +311,20 @@ Submitted on: ${new Date().toLocaleString()}
                       value={formData.phone}
                       onChange={handleInputChange}
                       required
-                      className="w-full px-4 py-3 border-2 border-hesa-sage/30 rounded-lg focus:border-hesa-green focus:outline-none transition-all duration-300 hover:shadow-lg focus:shadow-xl focus:scale-105"
-                      placeholder="+91 9676850926"
+                      maxLength={10}
+                      className={`w-full px-4 py-3 border-2 rounded-lg focus:outline-none transition-all duration-300 ${
+                        errors.phone 
+                          ? 'border-red-500 focus:border-red-500' 
+                          : 'border-hesa-sage/30 focus:border-hesa-green hover:shadow-lg focus:shadow-xl'
+                      }`}
+                      placeholder="9876543210"
                     />
+                    {errors.phone && (
+                      <p className="text-red-500 text-sm mt-1">{errors.phone}</p>
+                    )}
+                    {!errors.phone && formData.phone && (
+                      <p className="text-hesa-gray text-xs mt-1">Enter 10 digits starting with 9, 8, 7, or 6</p>
+                    )}
                   </div>
                 </div>
 
@@ -175,9 +339,16 @@ Submitted on: ${new Date().toLocaleString()}
                     value={formData.email}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-4 py-3 border-2 border-hesa-sage/30 rounded-lg focus:border-hesa-green focus:outline-none transition-colors"
+                    className={`w-full px-4 py-3 border-2 rounded-lg focus:outline-none transition-all duration-300 ${
+                      errors.email 
+                        ? 'border-red-500 focus:border-red-500' 
+                        : 'border-hesa-sage/30 focus:border-hesa-green hover:shadow-lg focus:shadow-xl'
+                    }`}
                     placeholder="your.email@example.com"
                   />
+                  {errors.email && (
+                    <p className="text-red-500 text-sm mt-1">{errors.email}</p>
+                  )}
                 </div>
 
                 <div>
@@ -191,9 +362,16 @@ Submitted on: ${new Date().toLocaleString()}
                     value={formData.location}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-4 py-3 border-2 border-hesa-sage/30 rounded-lg focus:border-hesa-green focus:outline-none transition-colors"
+                    className={`w-full px-4 py-3 border-2 rounded-lg focus:outline-none transition-all duration-300 ${
+                      errors.location 
+                        ? 'border-red-500 focus:border-red-500' 
+                        : 'border-hesa-sage/30 focus:border-hesa-green hover:shadow-lg focus:shadow-xl'
+                    }`}
                     placeholder="e.g., Village Name, District, State"
                   />
+                  {errors.location && (
+                    <p className="text-red-500 text-sm mt-1">{errors.location}</p>
+                  )}
                 </div>
 
                 <div>

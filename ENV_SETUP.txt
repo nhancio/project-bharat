@@ -1,0 +1,28 @@
+===========================================
+ENVIRONMENT VARIABLES SETUP
+===========================================
+
+Create a file named ".env" in the root directory of your project
+with the following content:
+
+-------------------------------------------
+VITE_EMAILJS_SERVICE_ID=service_to51a0h
+VITE_EMAILJS_PUBLIC_KEY=sJRmvaj4n7OoyWI36
+VITE_EMAILJS_TEMPLATE_ID=your_template_id_here
+-------------------------------------------
+
+IMPORTANT NOTES:
+1. Replace "your_template_id_here" with the actual template ID from EmailJS dashboard
+2. The .env file is already in .gitignore and will NOT be committed to git
+3. For Netlify deployment, add these as environment variables in Netlify dashboard
+
+NETLIFY SETUP:
+1. Go to Netlify Dashboard → Your Site → Site settings → Environment variables
+2. Add each variable:
+   - VITE_EMAILJS_SERVICE_ID = service_to51a0h
+   - VITE_EMAILJS_PUBLIC_KEY = sJRmvaj4n7OoyWI36
+   - VITE_EMAILJS_TEMPLATE_ID = (your actual template ID)
+3. Redeploy your site after adding variables
+
+See EMAILJS_SETUP.md for detailed instructions and template code.
+
